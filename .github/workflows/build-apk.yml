@@ -1,7 +1,6 @@
 name: Build launcher APK
 on:
-  push:
-    branches: [polytron-glass-launcher]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
