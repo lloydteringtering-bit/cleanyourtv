@@ -222,7 +222,10 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Set<String> tvPackages = new HashSet<>();
         for (ResolveInfo ri : found) if (ri.activityInfo != null) tvPackages.add(ri.activityInfo.packageName);
         leanbackPackages = tvPackages;
-        Set<String> added = LibraryApps.load(ctx);
+        // Apps the owner added from All Apps, plus every dock app: a dock app with no TV entry (a phone build
+        // of Netflix, say) still has to show in the dock, so it is listed here as well.
+        Set<String> added = new HashSet<>(LibraryApps.load(ctx));
+        added.addAll(favourites);
         Set<String> removed = LibraryApps.loadRemoved(ctx);
         if (!added.isEmpty()) {
             Set<String> seen = new HashSet<>(tvPackages);
